@@ -2,7 +2,7 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Player spaceship
+// Playerspship
 const player = {
     x: canvas.width / 2,
     y: canvas.height - 60,
@@ -11,7 +11,7 @@ const player = {
     speed: 5
 };
 
-// Keyboard controls
+// Keyboardcntrls
 const keys = {};
 
 document.addEventListener("keydown", function(event) {
@@ -26,7 +26,7 @@ document.addEventListener("keyup", function(event) {
     keys[event.code] = false;
 });
 
-// Draw the spaceship
+// Draw spship
 function drawPlayer() {
     ctx.fillStyle = "#38bdf8";
     ctx.beginPath();
@@ -39,7 +39,7 @@ function drawPlayer() {
     ctx.fill();
 }
 
-// Move left and right
+// Mleft and right
 function movePlayer() {
     if (keys["ArrowLeft"] || keys["KeyA"]) {
         player.x = player.x - player.speed;
@@ -49,7 +49,7 @@ function movePlayer() {
         player.x = player.x + player.speed;
     }
 
-    // Keep player inside canvas
+    // To keep the player inside canvas
     if (player.x < 20) {
         player.x = 20;
     }
@@ -66,7 +66,7 @@ let lastShot = 0;
 function shoot() {
     let currentTime = performance.now();
 
-    // Small delay between shots
+    // Added a small delay between shots
     if (currentTime - lastShot < 250) {
         return;
     }
@@ -87,7 +87,7 @@ function updateBullets() {
     for (let i = bullets.length - 1; i >= 0; i--) {
         bullets[i].y = bullets[i].y - bullets[i].speed;
 
-        // Remove bullets outside the screen
+        // For removing bullets outside the screen
         if (bullets[i].y + bullets[i].height < 0) {
             bullets.splice(i, 1);
         }
@@ -120,7 +120,7 @@ for (let i = 0; i < 80; i++) {
     });
 }
 
-// Move stars down
+// mobement stars down
 function updateStars() {
     for (let star of stars) {
         star.y = star.y + star.speed;
