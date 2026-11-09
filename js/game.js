@@ -66,6 +66,9 @@ let lastShot = 0;
 // Enemies
 const enemies = [];
 
+// Player health
+let lives = 3;
+
 function shoot() {
     let currentTime = performance.now();
 
@@ -145,6 +148,35 @@ function checkCollisions() {
 }
 
 
+// Enemy hits the player....
+function checkPlayerCollision() {
+
+    for (let i = enemies.length - 1; i >= 0; i--) {
+
+        let enemy = enemies[i];
+
+        if (
+            player.x - 20 < enemy.x + enemy.width &&
+            player.x + 20 > enemy.x &&
+            player.y < enemy.y + enemy.height &&
+            player.y + 40 > enemy.y
+        ) {
+
+            // minus 1 life.
+            lives--;
+
+            // remove the enemy.
+            enemies.splice(i, 1);
+
+            // and if you have no lives left,
+            if (lives <= 0) {
+                alert("GAME OVER!");
+                location.reload();
+            }
+        }
+    }
+}
+
 
 // Draw bullets
 function drawBullets() {
@@ -172,6 +204,13 @@ function drawEnemies() {
             enemy.height
         );
     }
+}
+
+// Draw player lives
+function drawLives() {
+    ctx.fillStyle = "white";
+    ctx.font = "24px Arial";
+    ctx.fillText("Lives: " + lives, 10, 30);
 }
 
 // Background stars
@@ -225,7 +264,10 @@ function gameLoop() {
     drawPlayer();
     drawBullets();
     drawEnemies();
+    drawLives();
+
     checkCollisions();
+    checkPlayerCollision();
 
     requestAnimationFrame(gameLoop);
 }
