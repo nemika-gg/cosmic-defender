@@ -5,8 +5,8 @@ const ctx = canvas.getContext("2d");
 let player = {
     x: canvas.width / 2,
     y: canvas.height - 60,
-    width: 40,
-    height: 40,
+    width: 70,
+    height: 70,
     speed: 5
 };
 
@@ -27,6 +27,12 @@ let button = {
     width: 200,
     height: 50
 };
+
+let enemyImage = new Image();
+enemyImage.src = "enemy.png";
+
+let playerImage = new Image();
+playerImage.src = "player.png";
 
 document.addEventListener("keydown", function(e) {
     keys[e.code] = true;
@@ -72,15 +78,14 @@ canvas.addEventListener("click", function(e) {
 });
 
 function drawPlayer() {
-    ctx.fillStyle = "#38bdf8";
-    ctx.beginPath();
-    ctx.moveTo(player.x, player.y);
-    ctx.lineTo(player.x - 20, player.y + 40);
-    ctx.lineTo(player.x + 20, player.y + 40);
-    ctx.closePath();
-    ctx.fill();
+    ctx.drawImage(
+        playerImage,
+        player.x - 20,
+        player.y,
+        player.width,
+        player.height
+    );
 }
-
 function movePlayer() {
     if (keys["ArrowLeft"] || keys["KeyA"]) {
         player.x -= player.speed;
@@ -132,8 +137,8 @@ function spawnEnemy() {
     let enemy = {
         x: Math.random() * (canvas.width - 40) + 20,
         y: -40,
-        width: 40,
-        height: 40,
+        width: 60,
+        height: 60,
         speed: 2
     };
 
@@ -151,11 +156,16 @@ function updateEnemies() {
 }
 
 function drawEnemies() {
-    ctx.fillStyle = "red";
-
     for (let i = 0; i < enemies.length; i++) {
         let enemy = enemies[i];
-        ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
+
+        ctx.drawImage(
+            enemyImage,
+            enemy.x,
+            enemy.y,
+            enemy.width,
+            enemy.height
+        );
     }
 }
 
